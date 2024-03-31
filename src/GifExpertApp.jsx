@@ -1,20 +1,33 @@
 import { useState } from 'react';
+import AddCategory from './components/AddCategory';
+import { GifGrid } from './components/GifGrid';
 
 export const GifExpertApp = () => {
     const [categories, setCategories] = useState(['Anime', 'Carros']);
-    const onAddCategories = () => {
-        setCategories([...categories, 'categ']);
+
+    const onAddCategories = (NewCategory) => {
+        let flag = true;
+        categories.forEach((cate) => {
+            if (cate === NewCategory) {
+                flag = false;
+            }
+        })
+        if (flag) {
+            setCategories([...categories, NewCategory]);
+        }
     }
     return (
         <>
             <h1>Gift APP</h1>
+            <AddCategory
+                onNewCategory={(value) => onAddCategories(value)}
+            />
             <ol>
-                <input placeholder='categorias'
-                    name='cat'/>
+
                 {categories.map(category => {
-                    return <li key={category}>{category}</li>
+                    return <GifGrid key={category} category={category} />
                 })}
-                <button onClick={onAddCategories}>Aggregar</button>
+
             </ol>
         </>
     )
